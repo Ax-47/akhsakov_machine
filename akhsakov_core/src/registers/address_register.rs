@@ -13,6 +13,10 @@ impl AddressRegister {
             address: Address::zero(),
         }
     }
+
+    pub(crate) fn increase(&mut self) {
+        self.address = Address::new(self.address.0 + 1);
+    }
     pub(crate) fn load(&mut self, address: Address) {
         self.address = address;
     }

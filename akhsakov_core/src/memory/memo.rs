@@ -4,7 +4,7 @@ use crate::{
     registers::{address_register::AddressRegister, general_register::GeneralRegister},
     types::Binary,
 };
-
+#[derive(Clone)]
 pub(crate) struct Memory {
     data: Vec<Binary>,
     ar: Rc<RefCell<AddressRegister>>,

@@ -1,9 +1,12 @@
 use crate::types::{Address, Binary};
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub(crate) enum Instruction {
     Null = 0,
     Move = 1,
+    Add = 2,
+    Sub = 3,
+    Jmp = 4,
 }
 impl Instruction {
     fn new(ins: u32) -> Self {
@@ -14,8 +17,7 @@ impl Instruction {
     }
 }
 
-#[derive(Debug)]
-pub(crate) struct IsDirect(bool);
+pub(crate) type IsDirect = bool;
 
 #[derive(Debug)]
 pub(crate) struct Word {
@@ -32,7 +34,7 @@ impl Word {
         address2: Address,
     ) -> Self {
         Self {
-            is_direct: IsDirect(is_direct),
+            is_direct,
             instruction,
             address1,
             address2,
@@ -66,7 +68,7 @@ impl Word {
         let address2 = Address::new(ins as u16);
 
         Self {
-            is_direct: IsDirect(data[0]),
+            is_direct: data[0],
             instruction,
             address1,
             address2,
@@ -74,7 +76,7 @@ impl Word {
     }
     pub(crate) fn zero() -> Self {
         Self {
-            is_direct: IsDirect(false),
+            is_direct: false,
             instruction: Instruction::Move,
             address1: Address::zero(),
             address2: Address::zero(),
